@@ -8,7 +8,7 @@ https://oboki.net/workspace/python/selenium%EC%9D%84-%EC%9D%B4%EC%9A%A9%ED%95%9C
   - 프로젝트 디렉토리에 추가
 - 플레이리스트 텍스트 파일(`playlist.txt`)
   - 프로젝트 디렉토리에 추가
-  - 텍스트 한 줄 마다 artist - title 의 형태여야 함
+  - 텍스트 한 줄 마다 검색할 곡 제목 등의 내용이 있어야 함
 - selenium 설치
 ```bash
 $ pip3 install selenium
