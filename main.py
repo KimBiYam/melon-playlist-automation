@@ -1,6 +1,7 @@
 import traceback
 from selenium import webdriver
 from selenium.webdriver.common.alert import Alert
+from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.common.exceptions import NoSuchElementException, NoAlertPresentException
 from selenium.webdriver.support import expected_conditions as EC
@@ -30,9 +31,12 @@ driver.find_element_by_xpath('//*[@id="btnLogin"]').click()
 # 마크업 구조 맞추기 위해 임의의 텍스트 검색
 driver.find_element_by_xpath('//*[@id="top_search"]').send_keys("test")
 driver.find_element_by_xpath('//*[@id="gnb"]/fieldset/button[2]').click()
+search_song_button = driver.find_element_by_xpath('//*[@id="divCollection"]/ul/li[3]/a')
+search_song_button.click()
 
 # Playlist 로드
 file = open("playlist.txt", mode="rt", encoding="utf-8")
+log_file = open("error.log", mode="w", encoding="utf-8")
 plist = file.readlines()
 file.close()
 
@@ -53,7 +57,7 @@ for p in plist:
         search_button.click()
 
         open_add_playlist_button = driver.find_element_by_xpath(
-            '//*[@id="frm_songList"]/div/table/tbody/tr[1]/td[3]/div/div/button[2]/span'
+            '//*[@id="frm_defaultList"]/div/table/tbody/tr[1]/td[3]/div/div/button[2]'
         )
         open_add_playlist_button.click()
 
@@ -63,8 +67,13 @@ for p in plist:
 
         tmp = driver.window_handles[2]
 
-        first_playlist_cell = driver.find_element_by_xpath(
-            '//*[@id="plylstList"]/div/table/tbody/tr/td[1]/div/div/span'
+        first_playlist_cell = WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable(
+                (
+                    By.XPATH,
+                    '//*[@id="plylstList"]/div/table/tbody/tr/td[1]/div/div/span',
+                )
+            )
         )
         first_playlist_cell.click()
 
@@ -91,12 +100,15 @@ for p in plist:
 
     except NoSuchElementException:
         print("Error: " + p)
+        log_file.write(p + "\n")
         traceback.print_exc()
         continue
     except IndexError:
         print("Error: " + p)
+        log_file.write(p + "\n")
         traceback.print_exc()
         continue
 
 
 driver.close()
+log_file.close()
