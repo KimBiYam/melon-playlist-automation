@@ -62,10 +62,10 @@ for p in plist:
         open_add_playlist_button.click()
 
         # playlist 추가 팝업 대기
-        WebDriverWait(driver, 10).until(EC.number_of_windows_to_be(3))
-        driver.switch_to.window(driver.window_handles[2])
+        WebDriverWait(driver, 10).until(EC.number_of_windows_to_be(2))
+        driver.switch_to.window(driver.window_handles[1])
 
-        tmp = driver.window_handles[2]
+        tmp = driver.window_handles[1]
 
         first_playlist_cell = WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable(
@@ -91,11 +91,11 @@ for p in plist:
         except NoAlertPresentException:
             while True:
                 if len(driver.window_handles) > 2:
-                    if tmp != driver.window_handles[2]:
+                    if tmp != driver.window_handles[1]:
                         break
 
-            WebDriverWait(driver, 10).until(EC.number_of_windows_to_be(3))
-            driver.switch_to.window(driver.window_handles[2])
+            WebDriverWait(driver, 10).until(EC.number_of_windows_to_be(2))
+            driver.switch_to.window(driver.window_handles[1])
             driver.find_element_by_xpath("/html/body/div/div/div[2]/button").click()
 
     except NoSuchElementException:
