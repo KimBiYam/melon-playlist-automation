@@ -18,3 +18,6 @@ $ pip3 install selenium
 ```bash
 $ python3 main.py
 ```
+
+### 참고 사항
+플레이리스트 추가 실패 시 해당 곡 검색명은 error.log 파일에 기록됩니다
